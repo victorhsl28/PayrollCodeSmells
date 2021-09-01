@@ -7,9 +7,9 @@
 
 2) Na classe TimecardGUI, criei dois métodos para evitar código repetido.
  <br />Antes<br />
-    ```
+    ```java
    if(employee.getTimecards().isEmpty()) {
-                employee.getTimecards().add(new TimeCard());
+		employee.getTimecards().add(new TimeCard());
 		JOptionPane.showMessageDialog(null, "Timecard for employee " + id + " has been created!", "Success!", JOptionPane.INFORMATION_MESSAGE);
 		Main.lastAction = new Action(employee, null, null, null, Event.CREATE_TIMECARD);
 		WindowEvent closingEvent = new WindowEvent(frame, WindowEvent.WINDOW_CLOSING);
@@ -24,15 +24,17 @@
 		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closingEvent);
 		employee.getTimecards().get(employee.getTimecards().size() - 1).print_info();
 	}
+    ```
  <br />Depois<br />
     ```
    if(employee.getTimecards().isEmpty()) {
-                createTimeCard(employee, frame);
+	        createTimeCard(employee, frame);
         } else if(!employee.getTimecards().get(employee.getTimecards().size() - 1).isCompleted()) {
                 result.setText("The last employee timecard is not completed!");
         } else {
                 createTimeCard(employee, frame);
-        }
+        }```
+	
   <br />Com os métodos<br />
   
         private static void createTimeCard(Hourly employee, JFrame frame) {
