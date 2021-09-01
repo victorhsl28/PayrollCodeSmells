@@ -1,11 +1,13 @@
 # PayrollCodeSmells
 1) Criado o package com.victor.uttils e a classe ShowDialogMessage com o metodo showMessage
-Antes era utilizado JOptionPane.showMessageDialog(null, <message>, <title>, JOptionPane.INFORMATION_MESSAGE),
-Agora basta utilizar ShowDialogMessage.showMessage(<title>, <message>)
+Antes era utilizado
+  JOptionPane.showMessageDialog(null, <message>, <title>, JOptionPane.INFORMATION_MESSAGE),
+Agora basta utilizar
+  ShowDialogMessage.showMessage(<title>, <message>)
 
 2) Na classe TimecardGUI, criei dois métodos para evitar código repetido.
 Antes:
-  if(employee.getTimecards().isEmpty()) {
+  	if(employee.getTimecards().isEmpty()) {
 							employee.getTimecards().add(new TimeCard());
 							JOptionPane.showMessageDialog(null, "Timecard for employee " + id + " has been created!", "Success!", JOptionPane.INFORMATION_MESSAGE);
 							Main.lastAction = new Action(employee, null, null, null, Event.CREATE_TIMECARD);
