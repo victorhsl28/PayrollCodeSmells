@@ -2,10 +2,8 @@ package com.victor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.UUID;
 
 import javax.swing.BorderFactory;
@@ -18,8 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import com.victor.actions.Action;
-import com.victor.actions.Action.Event;
+import com.victor.actions.AddEmployeeAction;
 import com.victor.classes.Address;
 import com.victor.classes.Syndicate;
 import com.victor.employees.Comissioned;
@@ -233,9 +230,8 @@ public class AddGUI implements ActionListener {
 			if(!uuid.toString().equalsIgnoreCase(Main.nullUUID)) {
 				Main.syndicate.put(syndicateUUID, new Syndicate(syndicateUUID, Double.valueOf(salaryField.getText()) * 0.1));
 			}
-			Main.lastAction = new Action(Main.employees.get(uuid), null, null, null, Event.ADD_EMPLOYEE);
-			ShowDialogMessage.showMessage("Success!", "Employee " + nameField.getText() + " has been created with the ID: " + uuid.toString() + "!");
-			Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+			Main.control.setAction(new AddEmployeeAction(Main.employees.get(uuid)));
+			ShowDialogMessage.showMessage("Success!", "Employee " + nameField.getText() + " has been created with the ID: " + uuid.toString() + "!", true, frame);
 		} catch (Exception e) {
 			result.setText("There is an incorrect field!");
 		}

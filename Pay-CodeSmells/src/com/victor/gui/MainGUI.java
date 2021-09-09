@@ -11,9 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.victor.actions.Redo;
-import com.victor.actions.Undo;
 import com.victor.main.Main;
+import com.victor.utils.ShowDialogMessage;
 
 public class MainGUI implements ActionListener {
 	
@@ -129,11 +128,19 @@ public class MainGUI implements ActionListener {
 		}
 		
 		if(e.getSource() == undoButton) {
-			Undo.undo();
+			if(Main.control.getAction() == null) {
+				ShowDialogMessage.showMessage("Error", "There is nothing to undo!", false, null);
+			} else {
+				Main.control.undo();
+			}
 		}
 		
 		if(e.getSource() == redoButton) {
-			Redo.redo();
+			if(Main.control.getAction() == null) {
+				ShowDialogMessage.showMessage("Error", "There is nothing to redo!", false, null);
+			} else {
+				Main.control.redo();
+			}
 		}
 		
 		if(e.getSource() == createPaymentScheduleButton) {

@@ -2,10 +2,8 @@ package com.victor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.UUID;
 
 import javax.swing.BorderFactory;
@@ -15,8 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.victor.actions.Action;
-import com.victor.actions.Action.Event;
+import com.victor.actions.CreateServiceTaxAction;
 import com.victor.main.Main;
 import com.victor.utils.ShowDialogMessage;
 
@@ -78,10 +75,9 @@ public class SyndicateGUI implements ActionListener {
 			
 			if(Main.syndicate.containsKey(id)) {
 				Main.syndicate.get(id).getExtraTaxes().add(tax);
-				Main.lastAction = new Action(null, null, Main.syndicate.get(id), null, Event.CREATE_SERVICE_TAX);
-				ShowDialogMessage.showMessage("Success!", "Service tax for syndicate employee " + id + " has been created!");
-				Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+				ShowDialogMessage.showMessage("Success!", "Service tax for syndicate employee " + id + " has been created!", true, frame);
 				Main.syndicate.get(id).print_info();
+				Main.control.setAction(new CreateServiceTaxAction(Main.syndicate.get(id)));
 			} else {
 				result.setText("ID not founded!");
 			}

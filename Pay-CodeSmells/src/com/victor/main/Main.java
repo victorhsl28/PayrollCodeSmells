@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import com.victor.actions.Action;
+import com.victor.actions.Control;
+import com.victor.actions.RollAction;
 import com.victor.actions.StorageUndoData;
-import com.victor.actions.Action.Event;
 import com.victor.classes.SellResult;
 import com.victor.classes.Syndicate;
 import com.victor.classes.TimeCard;
@@ -24,7 +24,7 @@ public class Main {
 	public static Map<UUID, Employee> employees;
 	public static Map<UUID, Syndicate> syndicate;
 	public static List<String> paymentSchedules;
-	public static Action lastAction;
+	public static Control control;
 	public static String nullUUID;
 
 	public static void main(String[] args) {
@@ -34,6 +34,7 @@ public class Main {
 		loadDefaultPaymentSchedule();
 		nullUUID = new UUID(0, 0).toString();
 		new MainGUI();
+		control = new Control();
 	}
 	
 	public static void roll() {
@@ -78,7 +79,7 @@ public class Main {
 			}
 		}
 		
-		lastAction = new Action(null, null, null, employeeMap, Event.ROLL);
+		control.setAction(new RollAction(employeeMap));
 	}
 	
 	public static void pay(Employee employee, Map<UUID, StorageUndoData> employeeMap) {

@@ -2,10 +2,8 @@ package com.victor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.UUID;
 
 import javax.swing.BorderFactory;
@@ -15,8 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.victor.actions.Action;
-import com.victor.actions.Action.Event;
+import com.victor.actions.CreateSellResultAction;
 import com.victor.classes.SellResult;
 import com.victor.employees.Comissioned;
 import com.victor.main.Main;
@@ -81,10 +78,9 @@ public class SellResultGUI implements ActionListener {
 				if(Main.employees.get(id) instanceof Comissioned) {
 					Comissioned employee = (Comissioned) Main.employees.get(id);
 					employee.getSellResults().add(new SellResult(value));
-					Main.lastAction = new Action(employee, null, null, null, Event.CREATE_SELL_RESULT);
-					ShowDialogMessage.showMessage("Success!", "Sell result for employee " + id + " has been created!");
-					Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+					ShowDialogMessage.showMessage("Success!", "Sell result for employee " + id + " has been created!", true, frame);
 					employee.getSellResults().get(employee.getSellResults().size() - 1).print_info();
+					Main.control.setAction(new CreateSellResultAction(employee));
 				} else {
 					result.setText("This employee is not comissioned!");
 				}

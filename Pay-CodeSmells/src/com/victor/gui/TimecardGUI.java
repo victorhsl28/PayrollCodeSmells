@@ -2,10 +2,8 @@ package com.victor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.UUID;
 
 import javax.swing.BorderFactory;
@@ -17,8 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-import com.victor.actions.Action;
-import com.victor.actions.Action.Event;
+import com.victor.actions.CreateTimecardAction;
 import com.victor.classes.TimeCard;
 import com.victor.employees.Hourly;
 import com.victor.main.Main;
@@ -91,18 +88,18 @@ public class TimecardGUI implements ActionListener {
 					if(arriveButton.isSelected()) {
 						
 						if(employee.getTimecards().isEmpty()) {
-							createTimeCard(employee, frame);
+							executeTimeCard("created", employee);
 						} else if(!employee.getTimecards().get(employee.getTimecards().size() - 1).isCompleted()) {
 							result.setText("The last employee timecard is not completed!");
 						} else {
-							createTimeCard(employee, frame);
+							executeTimeCard("created", employee);
 						}
 						
 					} else if(exitButton.isSelected()) {
 						if(employee.getTimecards().isEmpty()) {
 							result.setText("There are no open timecards!");
 						} else if(!employee.getTimecards().get(employee.getTimecards().size() - 1).isCompleted()) {
-							updateTimeCard(employee, frame, id);
+							executeTimeCard("updated", employee);
 						} else {
 							result.setText("There are no open timecards!");
 						}
@@ -127,20 +124,16 @@ public class TimecardGUI implements ActionListener {
 		}
 	}
 	
-	private static void createTimeCard(Hourly employee, JFrame frame) {
-		employee.getTimecards().add(new TimeCard());
-		ShowDialogMessage.showMessage("Success!", "Timecard for employee \" + id + \" has been created!");
-		Main.lastAction = new Action(employee, null, null, null, Event.CREATE_TIMECARD);
-		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
-		employee.getTimecards().get(employee.getTimecards().size() - 1).print_info();
-	}
 	
-	private static void updateTimeCard(Hourly employee, JFrame frame, UUID id) {
-		employee.getTimecards().get(employee.getTimecards().size() - 1).closeTimecard();
-		Main.lastAction = new Action(employee, null, null, null, Event.CREATE_TIMECARD);
-		ShowDialogMessage.showMessage("Success!", "Timecard for employee " + id + " has been updated!");
-		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+	private void executeTimeCard(String option, Hourly employee) {
+		if(option.equalsIgnoreCase("created")) {
+			employee.getTimecards().add(new TimeCard());
+		} else {
+			employee.getTimecards().get(employee.getTimecards().size() - 1).closeTimecard();
+		}
+		ShowDialogMessage.showMessage("Success!", "Timecard for employee " + employee.getUUID().toString() + " has been " + option + "!", true, frame);
 		employee.getTimecards().get(employee.getTimecards().size() - 1).print_info();
+		Main.control.setAction(new CreateTimecardAction(employee));
 	}
 
 }

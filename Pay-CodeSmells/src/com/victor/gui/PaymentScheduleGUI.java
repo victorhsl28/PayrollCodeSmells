@@ -2,10 +2,8 @@ package com.victor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -101,8 +99,7 @@ public class PaymentScheduleGUI implements ActionListener {
 	}
 	
 	void showConcludeMessage(String paymentSchedule) {
-		ShowDialogMessage.showMessage("Success!", "Payment schedule " + paymentSchedule + " has been created!");
-		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		ShowDialogMessage.showMessage("Success!", "Payment schedule " + paymentSchedule + " has been created!", true, frame);
 	}
 
 }

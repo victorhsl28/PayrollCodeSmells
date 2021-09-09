@@ -2,10 +2,8 @@ package com.victor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.UUID;
 
 import javax.swing.BorderFactory;
@@ -15,8 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.victor.actions.Action;
-import com.victor.actions.Action.Event;
+import com.victor.actions.RemoveEmployeeAction;
 import com.victor.main.Main;
 import com.victor.utils.ShowDialogMessage;
 
@@ -68,13 +65,12 @@ public class RemoveGUI implements ActionListener {
 					Main.syndicate.remove(Main.employees.get(id).getSyndicateUUID());
 				}
 				if(!Main.employees.get(id).getSyndicateUUID().toString().equalsIgnoreCase(Main.nullUUID)) {
-					Main.lastAction = new Action(Main.employees.get(id), null, Main.syndicate.get(Main.employees.get(id).getSyndicateUUID()), null, Event.REMOVE_EMPLOYEE);
+					Main.control.setAction(new RemoveEmployeeAction(Main.employees.get(id), Main.syndicate.get(Main.employees.get(id).getSyndicateUUID())));
 				} else {
-					Main.lastAction = new Action(Main.employees.get(id), null, null, null, Event.REMOVE_EMPLOYEE);
+					Main.control.setAction(new RemoveEmployeeAction(Main.employees.get(id), null));
 				}
 				Main.employees.remove(id);
-				ShowDialogMessage.showMessage("Success!", "Employee " + id + " has been removed!");
-				Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+				ShowDialogMessage.showMessage("Success!", "Employee " + id + " has been removed!", true, frame);
 			} else {
 				result.setText("ID not founded!");
 			}

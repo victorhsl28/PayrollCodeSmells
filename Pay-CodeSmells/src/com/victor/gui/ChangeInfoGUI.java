@@ -2,10 +2,8 @@ package com.victor.gui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.UUID;
 
 import javax.swing.BorderFactory;
@@ -18,8 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import com.victor.actions.Action;
-import com.victor.actions.Action.Event;
+import com.victor.actions.ChangeEmployeeInfoAction;
 import com.victor.classes.Address;
 import com.victor.classes.Syndicate;
 import com.victor.employees.Comissioned;
@@ -409,12 +406,11 @@ public class ChangeInfoGUI implements ActionListener {
 			}
 		}
 		if(!oldEmployee.getSyndicateUUID().toString().equalsIgnoreCase(Main.nullUUID)) {
-			Main.lastAction = new Action(Main.employees.get(newID), oldEmployee, oldSyndicate, null, Event.CHANGE_EMPLOYEE_INFO);
+			Main.control.setAction(new ChangeEmployeeInfoAction(Main.employees.get(newID), oldEmployee, oldSyndicate));
 		} else {
-			Main.lastAction = new Action(Main.employees.get(newID), oldEmployee, null, null, Event.CHANGE_EMPLOYEE_INFO);
+			Main.control.setAction(new ChangeEmployeeInfoAction(Main.employees.get(newID), oldEmployee, null));
 		}
-		ShowDialogMessage.showMessage("Success!", "Employee " + oldID + " info has been saved!");
-		Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		ShowDialogMessage.showMessage("Success!", "Employee " + oldID + " info has been saved!", true, frame);
 	}
 
 	@Override
