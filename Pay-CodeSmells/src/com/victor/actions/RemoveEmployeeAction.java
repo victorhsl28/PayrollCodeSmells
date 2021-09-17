@@ -35,7 +35,7 @@ public class RemoveEmployeeAction implements Action {
 				((Comissioned)Main.employees.get(employee.getUUID())).getSellResults().add(sellResult);
 			}
 		}
-		if(!employee.getSyndicateUUID().toString().equalsIgnoreCase(Main.nullUUID)) {
+		if((!employee.getSyndicateUUID().toString().equalsIgnoreCase(Main.nullUUID)) && syndicate != null) {
 			Main.syndicate.put(employee.getSyndicateUUID(), new Syndicate(employee.getSyndicateUUID(), syndicate.getSyndicateTax()));
 			for(Double tax : syndicate.getExtraTaxes()) {
 				Main.syndicate.get(employee.getSyndicateUUID()).getExtraTaxes().add(tax);
